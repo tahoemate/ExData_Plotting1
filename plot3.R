@@ -27,10 +27,13 @@ if (overwriteData | !file.exists(datafile)) {
 alldata <- read.csv(datafile,header=TRUE,sep=";",na.strings=c("?"),as.is=TRUE)
 data <- subset(alldata, as.Date(Date,"%d/%m/%Y") >= as.Date("2007-02-01") & as.Date(Date,"%d/%m/%Y") <= as.Date("2007-02-02") )
 
-# Plot Global Active Power vs Date/Time.  Remember to use type="l" or you'll get a scatterplot.
-plot( x=as.POSIXct(paste(strptime(as.Date(data$Date,"%d/%m/%Y"), "%Y-%m-%d"),data$Time)),y=data$Sub_metering_1,ylab="Global Active Power (kilowatts)",xlab="",type="l")
-lines( x=as.POSIXct(paste(strptime(as.Date(data$Date,"%d/%m/%Y"), "%Y-%m-%d"),data$Time)),y=data$Sub_metering_2,type="l",col="red")
-lines( x=as.POSIXct(paste(strptime(as.Date(data$Date,"%d/%m/%Y"), "%Y-%m-%d"),data$Time)),y=data$Sub_metering_3,type="l",col="blue")
+# Compute once and use for all 3 charts
+dates = as.POSIXct(paste(strptime(as.Date(data$Date,"%d/%m/%Y"), "%Y-%m-%d"),data$Time))
+
+# Plot 3 Sub Metering values vs Date/Time.  Remember to use type="l" or you'll get a scatterplot.
+plot( x=dates,y=data$Sub_metering_1,ylab="Global Active Power (kilowatts)",xlab="",type="l")
+lines( x=dates,y=data$Sub_metering_2,type="l",col="red")
+lines( x=dates,y=data$Sub_metering_3,type="l",col="blue")
 
 legend("topright", c("Sub_meeting_1","Sub_meeting_2","Sub_meeting_3"),lwd=1,col=c("black","red","blue"))
 
