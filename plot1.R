@@ -19,3 +19,10 @@ if (overwriteData | !file.exists(datafile)) {
   }
 }
 
+# https://stat.ethz.ch/R-manual/R-devel/library/utils/html/read.table.html
+# downsize to dates in range 2/1/2007 and 2/2/2007
+# alldata <- read.csv(datafile,header=TRUE,sep=";",na.strings=c("?"),as.is=TRUE)
+# alldata <- read.csv(datafile,header=TRUE,sep=";",na.strings=c("?"),as.is=TRUE,colClasses = c("Date","character",rep(c("numeric"),7)))
+# For colClasses can also do colClasses=c("Date"="Date") for just one column.
+alldata <- read.csv(datafile,header=TRUE,sep=";",na.strings=c("?"),as.is=TRUE,colClasses = c("Date","character",rep(c("numeric"),7)))
+data <- subset(alldata, as.Date(Date,"%d/%m/%Y") >= as.Date("2007-02-01") & as.Date(Date,"%d/%m/%Y") <= as.Date("2007-02-02") )
