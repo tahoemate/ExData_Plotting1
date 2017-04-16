@@ -1,5 +1,5 @@
 # Class Exploratory Data Analysis - Week1
-# Plot 1: Histogram of Global Active Power
+# Plot 2: Plot of Global Active Power
 # Date Range:  2/1/2007 = 2/2/2007
 
 # Step 0.  
@@ -27,10 +27,10 @@ if (overwriteData | !file.exists(datafile)) {
 alldata <- read.csv(datafile,header=TRUE,sep=";",na.strings=c("?"),as.is=TRUE)
 data <- subset(alldata, as.Date(Date,"%d/%m/%Y") >= as.Date("2007-02-01") & as.Date(Date,"%d/%m/%Y") <= as.Date("2007-02-02") )
 
-# Histogram: Frequency of Global Active Power.
-hist(data$Global_active_power, col="red", breaks = 20, main="Global Active Power", ylab="Frequency", xlab="Global Active Power(kilowatts)")
+# Plot Global Active Power vs Date/Time.  Remember to use type="l" or you'll get a scatterplot.
+plot( x=as.POSIXct(paste(strptime(as.Date(c$Date,"%d/%m/%Y"), "%Y-%m-%d"),c$Time)),y=c$Global_active_power,ylab="Global Active Power (kilowatts)",xlab="",type="l")
 
-dev.copy(png, "plot1.png")
+dev.copy(png, "plot2.png")
 dev.off()
 
-print("Done Plot 1.")
+print("Done Plot 2.")
